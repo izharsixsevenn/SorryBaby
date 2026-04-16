@@ -25,15 +25,12 @@ body {
     width: 320px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     z-index: 2;
+    transition: all 0.5s ease;
 }
 
-.emoji {
-    font-size: 60px;
-}
+.emoji { font-size: 60px; }
 
-h1 {
-    color: #e75480;
-}
+h1 { color: #e75480; }
 
 #message {
     font-size: 14px;
@@ -57,30 +54,42 @@ h1 {
     background: #ff5c7a;
 }
 
-/* NO BUTTON (separate layer) */
+/* NO BUTTON */
 #noBtn {
     position: fixed;
-    top: 70%;
-    left: 65%;
+    top: 60%;
+    left: 60%;
     background: #ff8fa3;
     border: none;
     padding: 10px 20px;
     border-radius: 10px;
     color: white;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: 0.15s;
 }
 
 /* HEARTS */
 .heart {
     position: absolute;
     font-size: 20px;
-    animation: float 6s linear infinite;
+    animation: float 5s linear forwards;
 }
 
 @keyframes float {
     from { transform: translateY(100vh); opacity: 1; }
     to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* HEART BURST */
+.burst {
+    position: absolute;
+    font-size: 24px;
+    animation: pop 1s ease-out forwards;
+}
+
+@keyframes pop {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(3); opacity: 0; }
 }
 </style>
 </head>
@@ -94,72 +103,82 @@ h1 {
     <button id="yesBtn" onclick="forgive()">Yes 💕</button>
 </div>
 
-<!-- NO BUTTON OUTSIDE -->
 <button id="noBtn" onmouseover="moveNo()">No 😢</button>
 
-<!-- MUSIC -->
-<audio autoplay loop>
+<audio id="bgm" loop>
     <source src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3">
 </audio>
 
 <script>
-// INTRO TEXT
 const intro = "I’m really sorry... I didn’t mean to hurt you 🥺";
 let i = 0;
 
 function typeIntro() {
     if (i < intro.length) {
-        document.getElementById("message").innerHTML += intro[i];
-        i++;
-        setTimeout(typeIntro, 40);
+        document.getElementById("message").innerHTML += intro[i++];
+        setTimeout(typeIntro, 35);
     }
 }
 typeIntro();
 
-// YES CLICK → LETTER
+/* YES CLICK */
 function forgive() {
+    const audio = document.getElementById("bgm");
+    audio.volume = 0;
+    audio.play();
+
+    // fade in music
+    let vol = 0;
+    const fade = setInterval(() => {
+        if (vol < 1) {
+            vol += 0.05;
+            audio.volume = vol;
+        } else {
+            clearInterval(fade);
+        }
+    }, 100);
+
     const card = document.getElementById("card");
 
     card.innerHTML = `
-        <div style="font-size:50px;">💌</div>
+        <div style="font-size:55px;">💌</div>
         <h2 style="color:#e75480;">For You...</h2>
         <p id="letter"></p>
     `;
 
-    const text = "I know I hurt you, and I'm really sorry... 🥺 You mean a lot to me. I truly hope we can fix this together 💖";
+    const text = "I know I hurt you... I'm really sorry 🥺 You matter so much to me. I just want us to be okay again 💖";
 
     let j = 0;
     function typeLetter() {
         if (j < text.length) {
-            document.getElementById("letter").innerHTML += text[j];
-            j++;
-            setTimeout(typeLetter, 40);
+            document.getElementById("letter").innerHTML += text[j++];
+            setTimeout(typeLetter, 35);
         }
     }
-
     typeLetter();
 
-    // hide NO button after yes
     document.getElementById("noBtn").style.display = "none";
+
+    heartBurst();
 }
 
-// NO BUTTON RUN + SHRINK
+/* NO BUTTON ESCAPE (HARDER OVER TIME) */
 let scale = 1;
 
 function moveNo() {
     const btn = document.getElementById("noBtn");
 
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
 
     btn.style.left = x + "px";
     btn.style.top = y + "px";
 
-    scale -= 0.1;
+    scale = Math.max(0.3, scale - 0.05);
     btn.style.transform = scale(${scale});
 }
 
-// HEARTS
+/* HEART RAIN */
 function heart() {
     const h = document.createElement("div");
     h.className = "heart";
@@ -169,11 +188,24 @@ function heart() {
     h.style.fontSize = (Math.random() * 20 + 10) + "px";
 
     document.body.appendChild(h);
-
-    setTimeout(() => h.remove(), 6000);
+    setTimeout(() => h.remove(), 5000);
 }
+setInterval(heart, 250);
 
-setInterval(heart, 300);
+/* HEART BURST ON YES */
+function heartBurst() {
+    for (let i = 0; i < 25; i++) {
+        const h = document.createElement("div");
+        h.className = "burst";
+        h.innerHTML = "💖";
+
+        h.style.left = (50 + Math.random() * 10 - 5) + "vw";
+        h.style.top = (50 + Math.random() * 10 - 5) + "vh";
+
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1000);
+    }
+}
 </script>
 
 </body>
