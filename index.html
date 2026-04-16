@@ -48,9 +48,9 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 10px;
-    position: relative;
 }
 
+/* buttons */
 button {
     background: #ff8fa3;
     border: none;
@@ -60,15 +60,15 @@ button {
     font-size: 16px;
     cursor: pointer;
     transition: 0.3s;
-    position: relative;
 }
 
 button:hover {
     background: #ff5c7a;
 }
 
+/* FIXED NO BUTTON */
 #noBtn {
-    position: absolute;
+    position: fixed;
 }
 
 /* hearts */
@@ -105,7 +105,7 @@ button:hover {
 </div>
 
 <!-- background music -->
-<audio id="bgm" autoplay loop>
+<audio autoplay loop>
     <source src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3" type="audio/mpeg">
 </audio>
 
@@ -123,7 +123,7 @@ function typeIntro() {
 }
 typeIntro();
 
-// YES BUTTON → SHOW LETTER
+// YES BUTTON → LETTER
 function forgive() {
     const card = document.getElementById("card");
 
