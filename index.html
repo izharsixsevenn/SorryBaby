@@ -5,221 +5,160 @@
 <title>I'm Sorry ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400;500&family=Dancing+Script:wght@400;700&family=La+Belle+Aurore&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cedarville+Cursive&family=Reenie+Beanie&display=swap" rel="stylesheet">
 
 <style>
-body{
-    margin:0;
-    font-family:'Caveat', cursive; /* Main handwritten feel */
-    text-align:center;
-    overflow-x:hidden;
-    min-height:100vh;
-    padding-top:40px;
-    background: 
-        linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)),
-        url('https://picsum.photos/id/1015/2000/2000') center/cover; /* Scrapbook notebook texture */
-    background-attachment: fixed;
-    color: #3c2f2f;
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Cedarville Cursive', cursive; /* Main realistic handwritten font */
+    background: #f8f1e3; /* Warm light paper tone */
+    position: relative;
+    color: #2c2c2c;
 }
 
-/* TITLE - Now clearly above envelope */
-h1{
-    font-family: 'La Belle Aurore', cursive; /* Soft handwritten romantic */
-    font-size: clamp(48px, 9vw, 82px);
-    color: #9c2a2a;
-    margin: 15px 0 25px 0;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.15);
-    letter-spacing: 2px;
+/* Subtle notebook lines */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 29px,
+        rgba(140, 100, 70, 0.13) 29px,
+        rgba(140, 100, 70, 0.13) 30px
+    );
+    pointer-events: none;
+    z-index: 1;
 }
 
-/* HEARTS */
-.heart{
-    position:fixed;
-    top:-30px;
-    color:rgba(220, 40, 40, 0.85);
-    font-size:24px;
-    animation:fall linear infinite;
-    z-index:1;
-    pointer-events:none;
-}
-@keyframes fall{
-    to{transform:translateY(110vh);}
-}
-
-/* ENVELOPE */
-.envelope-wrapper{
-    margin: 10px auto 40px;
-    display:flex;
-    justify-content:center;
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(48px, 8vw, 78px);
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #d23a3a;
+    text-shadow: 0 4px 15px rgba(210, 58, 58, 0.5);
+    z-index: 10;
+    letter-spacing: 1px;
 }
 
-.envelope{
-    width:420px;
-    max-width:92vw;
-    height:290px;
-    background:#8b3a3a;
-    position:relative;
-    cursor:pointer;
-    border-radius:22px;
-    box-shadow:0 18px 40px rgba(0,0,0,0.55);
+/* Handwritten Note Container */
+.note {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 88%;
+    max-width: 520px;
+    background: #fffef5;
+    padding: 48px 38px 60px;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    font-size: 22px;
+    line-height: 1.68;
+    color: #1f2a44;
+    text-align: left;
+    z-index: 20;
+    border: 1px solid #e0d8c0;
 }
 
-.flap{
-    position:absolute;
-    inset:0;
-    background:#b14a4a;
-    clip-path:polygon(0 0,100% 0,50% 58%);
-    transform-origin:top;
-    transition:transform 0.95s cubic-bezier(0.6, 0, 0.3, 1);
-    z-index:3;
+/* Anime girl sticker */
+.anime-sticker {
+    position: absolute;
+    right: -28px;
+    top: 56%;
+    width: 115px;
+    z-index: 25;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
 }
 
-.letter{
-    position:absolute;
-    inset:30px;
-    background:#fffef0; /* Warm paper tone */
-    border-radius:16px;
-    padding:28px 22px;
-    font-family:'Dancing Script', cursive; /* Handwritten letter inside */
-    font-size:27px;
-    color:#5c2a2a;
-    line-height:1.55;
-    box-shadow:inset 0 0 25px rgba(140,60,60,0.15);
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 27px;
+    color: #ff4d6d;
+    animation: floatHeart 11s linear infinite;
+    z-index: 5;
+    opacity: 0.9;
 }
-
-/* Open animation */
-.envelope.open .flap{
-    transform:rotateX(180deg);
-}
-
-/* BUTTONS */
-button{
-    font-family:'Caveat', cursive;
-    font-size:17px;
-    border:none;
-    padding:11px 22px;
-    margin:8px 6px;
-    border-radius:30px;
-    cursor:pointer;
-    transition:all 0.3s;
-}
-
-.yes{
-    background:#d23a3a;
-    color:white;
-}
-.yes:hover{transform:scale(1.1); background:#e04d4d;}
-
-.no{
-    background:#e8d5c0;
-    color:#5c2a2a;
-    position:relative;
-}
-.no:hover{background:#d9c2a8;}
-
-/* APOLOGY CARD */
-.card{
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    z-index:99999;
-    background:#fffef0;
-    padding:45px 35px;
-    border-radius:26px;
-    box-shadow:0 25px 70px rgba(0,0,0,0.65);
-    max-width:620px;
-    width:90%;
-    text-align:center;
-    border:1px solid #d4b8a0;
-}
-
-.script{
-    font-family:'Great Vibes', cursive; /* Romantic handwritten */
-    font-size:34px;
-    color:#6b2f2f;
-    line-height:1.75;
-}
-
-/* FLOWERS & BOWS */
-.flower{
-    position:fixed;
-    bottom:-80px;
-    font-size:44px;
-    animation:floatUp 4.8s ease-out forwards;
-    pointer-events:none;
-    z-index:2;
-}
-@keyframes floatUp{
-    0%{opacity:0; transform:translateY(0) scale(0.5);}
-    30%{opacity:1;}
-    100%{opacity:0; transform:translateY(-135vh) scale(1.35);}
-}
-
-.bow{
-    position:fixed;
-    top:-50px;
-    font-size:38px;
-    animation:bowFall 6s linear forwards;
-    pointer-events:none;
-    z-index:2;
-}
-@keyframes bowFall{
-    to{transform:translateY(125vh) rotate(400deg); opacity:0;}
-}
-
-#flowerSelector{
-    display:none;
-    margin:25px auto;
+@keyframes floatHeart {
+    0% { transform: translateY(110vh) rotate(0deg); }
+    100% { transform: translateY(-90px) rotate(30deg); opacity: 0; }
 }
 
 /* Music button */
-.music-btn{
-    font-family:'Caveat', cursive;
-    background:rgba(255,255,255,0.25);
-    color:#3c2f2f;
-    border:2px solid rgba(140,60,60,0.4);
-    padding:10px 20px;
-    margin-bottom:10px;
-    border-radius:30px;
+.music-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(210, 58, 58, 0.22);
+    color: #3c2f2f;
+    border: 2px solid rgba(210, 58, 58, 0.45);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 17px;
+    z-index: 30;
+    cursor: pointer;
+}
+
+/* Apology Card */
+.card {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fffef5;
+    color: #1f2a44;
+    padding: 42px 32px;
+    border-radius: 22px;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 25px 65px rgba(0,0,0,0.6);
+    z-index: 100;
+    font-family: 'Cedarville Cursive', cursive;
+    font-size: 27px;
+    line-height: 1.65;
+    text-align: center;
 }
 </style>
 </head>
-
 <body>
 
 <h1>I'm Sorry ❤️</h1>
 
-<button class="music-btn" onclick="toggleMusic()">🎶 Play / Pause Music</button>
+<button class="music-btn" onclick="toggleMusic()">🎵 Play / Pause Music</button>
 
-<!-- ENVELOPE -->
-<div class="envelope-wrapper" id="envWrap">
-    <div class="envelope" id="envelope">
-        <div class="flap"></div>
-        <div class="letter">
-            <p>I’m really sorry... 🥺</p>
-            <button class="yes" onclick="answerYes()">Forgive Me ❤️</button>
-            <button class="no" onmouseover="moveNo(this)">No 😢</button>
-        </div>
+<!-- Handwritten Note -->
+<div class="note" id="note">
+    <p>you, maybe i'm shy to tell u my problem, and i'm sorry sometimes u feel unloved, sorry i made u feel that way. Time may pass, and storms may rage, but my heart will always find its way back to you. You are, and always will be, my chosen one. Whatever happens between us, know that I will always choose you.</p>
+    
+    <div style="margin-top:32px; font-size:21px; text-align:right; color:#5c5c5c; font-family:'Reenie Beanie', cursive;">
+        might fight, we might disagree, but at the end of the day, you win. you're my everything ❤️
     </div>
 </div>
 
-<!-- Flower selector -->
-<div id="flowerSelector">
-    <button onclick="startFlowers('❤️')" class="yes">Hearts ❤️</button>
-    <button onclick="startFlowers('🌹')" class="yes">Roses 🌹</button>
-    <button onclick="startFlowers('💔')" class="yes">Broken Hearts 💔</button>
-</div>
+<!-- Cute Anime Girl Sticker -->
+<img src="https://picsum.photos/id/1005/220/280" alt="anime girl" class="anime-sticker" id="sticker">
 
-<!-- Apology Card -->
+<!-- Floating hearts container -->
+<div id="heartsContainer"></div>
+
+<!-- Final Apology Card -->
 <div class="card" id="card">
-    <p class="script">
-        I’m truly sorry for what I did.<br><br>
-        I never meant to hurt you or make you feel unimportant.<br><br>
-        You mean everything to me, and I hope you can forgive me.<br><br>
-        Please don’t leave me like this ❤️
-    </p>
+    I’m truly sorry for hurting you.<br><br>
+    You mean the world to me.<br>
+    Please forgive me ❤️<br><br>
+    I will always choose you.
 </div>
 
 <audio id="music" loop>
@@ -227,21 +166,25 @@ button{
 </audio>
 
 <script>
-/* Falling hearts */
-for(let i = 0; i < 32; i++){
-    let h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "❤️";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (3.5 + Math.random() * 7) + "s";
-    h.style.animationDelay = Math.random() * -10 + "s";
-    document.body.appendChild(h);
+// Create floating hearts
+function createHearts() {
+    const container = document.getElementById('heartsContainer');
+    for (let i = 0; i < 24; i++) {
+        let h = document.createElement('div');
+        h.className = 'heart';
+        h.innerHTML = ['❤️','💗','💕'][Math.floor(Math.random()*3)];
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.animationDuration = (10 + Math.random() * 13) + 's';
+        h.style.animationDelay = '-' + Math.random() * 16 + 's';
+        container.appendChild(h);
+    }
 }
+createHearts();
 
-/* Music */
-function toggleMusic(){
-    let m = document.getElementById("music");
-    if(m.paused){
+// Music control
+function toggleMusic() {
+    const m = document.getElementById("music");
+    if (m.paused) {
         m.volume = 0.5;
         m.play();
     } else {
@@ -249,75 +192,23 @@ function toggleMusic(){
     }
 }
 
-/* Open envelope */
-function answerYes(){
-    const envelope = document.getElementById("envelope");
-    const wrap = document.getElementById("envWrap");
-
-    envelope.classList.add("open");
-
+// Click the note to open the card
+document.getElementById("note").addEventListener("click", () => {
+    document.getElementById("note").style.opacity = "0.35";
+    document.getElementById("sticker").style.opacity = "0.65";
+    
     const music = document.getElementById("music");
-    music.volume = 0.5;
-    music.play().catch(()=>{});
-
-    showBows();
-    startFlowers('❤️');
-
-    document.getElementById("flowerSelector").style.display = "block";
-
+    music.play().catch(() => {});
+    
     setTimeout(() => {
-        wrap.style.transition = "all 0.9s ease";
-        wrap.style.opacity = "0";
-        wrap.style.transform = "scale(0.65) translateY(-40px)";
-        
-        setTimeout(() => {
-            document.getElementById("card").style.display = "block";
-        }, 500);
-    }, 950);
-}
-
-/* Moving No button */
-function moveNo(btn){
-    const maxX = window.innerWidth - 200;
-    const maxY = window.innerHeight * 0.55;
-    btn.style.position = "absolute";
-    btn.style.left = Math.random() * maxX + "px";
-    btn.style.top = Math.random() * maxY + "px";
-}
-
-/* Flowers */
-let flowerInterval;
-function startFlowers(type){
-    if(flowerInterval) clearInterval(flowerInterval);
-
-    flowerInterval = setInterval(() => {
-        let f = document.createElement("div");
-        f.className = "flower";
-        f.innerHTML = type;
-        f.style.left = Math.random() * 100 + "vw";
-        f.style.animationDuration = (4 + Math.random() * 2.5) + "s";
-        document.body.appendChild(f);
-        setTimeout(() => f.remove(), 6500);
-    }, 420);
-}
-
-/* Bows */
-function showBows(){
-    for(let i = 0; i < 13; i++){
-        let b = document.createElement("div");
-        b.className = "bow";
-        b.innerHTML = "🎀";
-        b.style.left = Math.random() * 100 + "vw";
-        b.style.animationDuration = (5 + Math.random() * 3) + "s";
-        document.body.appendChild(b);
-        setTimeout(() => b.remove(), 7500);
-    }
-}
+        document.getElementById("card").style.display = "block";
+    }, 450);
+});
 
 // Click card to close
-document.getElementById("card").addEventListener("click", function(){
+document.getElementById("card").addEventListener("click", function() {
     this.style.opacity = "0";
-    setTimeout(() => this.style.display = "none", 900);
+    setTimeout(() => this.style.display = "none", 700);
 });
 </script>
 
