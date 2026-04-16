@@ -35,48 +35,6 @@ h1{
     to{transform:translateY(110vh);}
 }
 
-/* ENVELOPE */
-.envelope-wrapper{
-    display:flex;
-    justify-content:center;
-    margin:40px auto;
-    transition:0.6s ease;
-}
-
-.envelope{
-    width:320px;
-    height:220px;
-    background:#7a0000;
-    position:relative;
-    cursor:pointer;
-    border-radius:14px;
-}
-
-.flap{
-    position:absolute;
-    inset:0;
-    background:#a30000;
-    clip-path:polygon(0 0,100% 0,50% 55%);
-    transform-origin:top;
-    transition:transform 0.9s ease;
-    z-index:3;
-}
-
-.letter{
-    position:absolute;
-    inset:20px;
-    background:white;
-    border-radius:12px;
-    padding:18px;
-    font-family:'Great Vibes',cursive;
-    font-size:24px;
-    color:#5a0000;
-}
-
-.envelope.open .flap{
-    transform:rotateX(180deg);
-}
-
 /* BUTTONS */
 button{
     font-family:'Poppins',sans-serif;
@@ -91,9 +49,8 @@ button{
 .yes{background:#ff2e2e;color:white;}
 .no{background:#ddd;position:relative;}
 
-/* FIXED CARD (NO MORE BLOCKING ISSUES) */
+/* CARD (NO BLOCKING EVER) */
 .card{
-    display:none;
     position:fixed;
     top:50%;
     left:50%;
@@ -141,9 +98,6 @@ button{
     to{transform:translateY(110vh) rotate(360deg); opacity:0;}
 }
 
-#flowerSelector{
-    display:none;
-}
 </style>
 </head>
 
@@ -157,26 +111,7 @@ button{
 
 <button onclick="toggleMusic()">🎶 Play / Pause Music</button>
 
-<!-- ENVELOPE -->
-<div class="envelope-wrapper" id="envWrap">
-    <div class="envelope" id="envelope">
-        <div class="flap"></div>
-        <div class="letter">
-            <p>I’m really sorry... 🥺</p>
-            <button class="yes" onclick="answerYes()">Forgive Me ❤️</button>
-            <button class="no" onmouseover="moveNo(this)">No 😢</button>
-        </div>
-    </div>
-</div>
-
-<!-- FLOWER SELECTOR -->
-<div id="flowerSelector">
-  <button onclick="startFlowers('❤️')" class="yes">Hearts ❤️</button>
-  <button onclick="startFlowers('🌹')" class="yes">Roses 🌹</button>
-  <button onclick="startFlowers('💔')" class="yes">Broken Hearts 💔</button>
-</div>
-
-<!-- APOLOGY CARD -->
+<!-- APOLOGY CARD (ONLY MAIN UI) -->
 <div class="card" id="card">
 <p class="script">
 I’m truly sorry for what I did.<br><br>
@@ -184,6 +119,9 @@ I never meant to hurt you or make you feel unimportant.<br><br>
 You mean everything to me, and I hope you can forgive me.<br><br>
 Please don’t leave me like this ❤️
 </p>
+
+<button class="yes" onclick="startFlowers('❤️')">Forgive Me ❤️</button>
+<button class="no" onmouseover="moveNo(this)">No 😢</button>
 </div>
 
 <script>
@@ -209,35 +147,11 @@ function toggleMusic(){
     }
 }
 
-/* ENVELOPE OPEN */
-function answerYes(){
-    const envelope=document.getElementById("envelope");
-    const wrap=document.getElementById("envWrap");
-
-    envelope.classList.add("open");
-
-    const music=document.getElementById("music");
-    music.volume=0.5;
-    music.play();
-
-    showBows();
-    startFlowers('❤️');
-
-    document.getElementById("flowerSelector").style.display="block";
-
-    setTimeout(()=>{
-        wrap.style.opacity="0";
-        wrap.style.pointerEvents="none";
-        wrap.style.transform="scale(0)";
-        document.getElementById("card").style.display="block";
-    },900);
-}
-
-/* NO BUTTON */
+/* NO BUTTON MOVE */
 function moveNo(btn){
-    btn.style.position="absolute";
-    btn.style.left=Math.random()*200+"px";
-    btn.style.top=Math.random()*100+"px";
+    const x=(Math.random()*200)-100;
+    const y=(Math.random()*100)-50;
+    btn.style.transform=translate(${x}px,${y}px);
 }
 
 /* FLOWERS */
@@ -245,27 +159,33 @@ let flowerInterval;
 function startFlowers(type){
     if(flowerInterval) clearInterval(flowerInterval);
 
-    flowerInterval = setInterval(()=>{
+    flowerInterval=setInterval(()=>{
         let f=document.createElement("div");
         f.className="flower";
         f.innerHTML=type;
         f.style.left=Math.random()*100+"vw";
         document.body.appendChild(f);
         setTimeout(()=>f.remove(),4000);
-    },500);
+    },400);
 }
 
-/* BOWS */
-function showBows(){
-    for(let i=0;i<12;i++){
-        let b=document.createElement("div");
-        b.className="bow";
-        b.innerHTML="🎀";
-        b.style.left=Math.random()*100+"vw";
-        document.body.appendChild(b);
-        setTimeout(()=>b.remove(),5000);
-    }
+/* FLOWERS STYLE (added dynamically support) */
+const style=document.createElement("style");
+style.innerHTML=`
+.flower{
+    position:fixed;
+    bottom:-60px;
+    font-size:40px;
+    animation:floatUp 4s ease-out forwards;
+    pointer-events:none;
 }
+@keyframes floatUp{
+    0%{opacity:0; transform:translateY(0) scale(0.5);}
+    30%{opacity:1;}
+    100%{opacity:0; transform:translateY(-120vh) scale(1.2);}
+}
+`;
+document.head.appendChild(style);
 
 </script>
 
