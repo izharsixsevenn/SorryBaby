@@ -24,8 +24,6 @@ body {
     text-align: center;
     width: 320px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    z-index: 2;
-    transition: all 0.5s ease;
 }
 
 .emoji { font-size: 60px; }
@@ -39,33 +37,28 @@ h1 { color: #e75480; }
     margin: 15px 0;
 }
 
-/* YES BUTTON */
-#yesBtn {
-    background: #ff8fa3;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 10px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+/* BUTTONS */
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
 }
 
-#yesBtn:hover {
-    background: #ff5c7a;
-}
-
-/* NO BUTTON */
-#noBtn {
-    position: fixed;
-    top: 60%;
-    left: 60%;
+#yesBtn, #noBtn {
+    flex: 1;
     background: #ff8fa3;
     border: none;
     padding: 10px 20px;
     border-radius: 10px;
     color: white;
+    font-size: 16px;
     cursor: pointer;
     transition: 0.15s;
+}
+
+#yesBtn:hover {
+    background: #ff5c7a;
 }
 
 /* HEARTS */
@@ -100,23 +93,27 @@ h1 { color: #e75480; }
     <div class="emoji">😭</div>
     <h1>Will you forgive me?</h1>
     <div id="message"></div>
-    <button id="yesBtn" onclick="forgive()">Yes 💕</button>
-</div>
 
-<button id="noBtn" onmouseover="moveNo()">No 😢</button>
+    <div class="btn-container">
+        <button id="yesBtn" onclick="forgive()">Yes 💕</button>
+        <button id="noBtn" onmouseover="moveNo()">No 😢</button>
+    </div>
+</div>
 
 <audio id="bgm" loop>
     <source src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3">
 </audio>
 
 <script>
+
+/* TYPE TEXT */
 const intro = "I’m really sorry... I didn’t mean to hurt you 🥺";
 let i = 0;
 
 function typeIntro() {
     if (i < intro.length) {
         document.getElementById("message").innerHTML += intro[i++];
-        setTimeout(typeIntro, 35);
+        setTimeout(typeIntro, 40);
     }
 }
 typeIntro();
@@ -124,10 +121,10 @@ typeIntro();
 /* YES CLICK */
 function forgive() {
     const audio = document.getElementById("bgm");
-    audio.volume = 0;
-    audio.play();
 
-    // fade in music
+    audio.play().catch(()=>{});
+    audio.volume = 0;
+
     let vol = 0;
     const fade = setInterval(() => {
         if (vol < 1) {
@@ -162,20 +159,14 @@ function forgive() {
     heartBurst();
 }
 
-/* NO BUTTON ESCAPE (HARDER OVER TIME) */
-let scale = 1;
-
+/* NO BUTTON MOVE (SMALL ESCAPE EFFECT) */
 function moveNo() {
     const btn = document.getElementById("noBtn");
 
-    const x = Math.random() * (window.innerWidth - 120);
-    const y = Math.random() * (window.innerHeight - 60);
+    const x = (Math.random() * 20) - 10;
+    const y = (Math.random() * 20) - 10;
 
-    btn.style.left = x + "px";
-    btn.style.top = y + "px";
-
-    scale = Math.max(0.3, scale - 0.05);
-    btn.style.transform = scale(${scale});
+    btn.style.transform = translate(${x}px, ${y}px) scale(0.95);
 }
 
 /* HEART RAIN */
@@ -192,7 +183,7 @@ function heart() {
 }
 setInterval(heart, 250);
 
-/* HEART BURST ON YES */
+/* HEART BURST */
 function heartBurst() {
     for (let i = 0; i < 25; i++) {
         const h = document.createElement("div");
@@ -206,6 +197,7 @@ function heartBurst() {
         setTimeout(() => h.remove(), 1000);
     }
 }
+
 </script>
 
 </body>
