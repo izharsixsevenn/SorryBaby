@@ -2,199 +2,260 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Forgive Me 💖</title>
+<title>I'm Sorry 💔</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to bottom, #f7b6c2, #fcd3da);
-    font-family: Arial, sans-serif;
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    text-align:center;
+    overflow-x:hidden;
+    background-color:#ffd6e8;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAH0lEQVQYV2NkYGBgYGBg+M9AC1CFIwwGhkF6QYABh0CAGxYEwYAAAAASUVORK5CYII=');
+    background-size: cover;
 }
 
-/* CARD */
-.card {
-    background: #ffe6ea;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    width: 320px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-.emoji { font-size: 60px; }
-
-h1 { color: #e75480; }
-
-#message {
-    font-size: 14px;
-    color: #555;
-    min-height: 40px;
-    margin: 15px 0;
-}
-
-/* BUTTONS */
-.btn-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-#yesBtn, #noBtn {
-    flex: 1;
-    background: #ff8fa3;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.15s;
-}
-
-#yesBtn:hover {
-    background: #ff5c7a;
+/* TITLE */
+h1{
+    font-family:'Parisienne',cursive;
+    font-size:56px;
+    color:#b1124c;
 }
 
 /* HEARTS */
-.heart {
-    position: absolute;
-    font-size: 20px;
-    animation: float 5s linear forwards;
+.heart{
+    position:fixed;
+    top:-10px;
+    color:rgba(255,0,100,0.6);
+    font-size:20px;
+    animation:fall linear infinite;
+}
+@keyframes fall{
+    to{transform:translateY(110vh);}
 }
 
-@keyframes float {
-    from { transform: translateY(100vh); opacity: 1; }
-    to { transform: translateY(-10vh); opacity: 0; }
+/* ENVELOPE */
+.envelope-wrapper{
+    display:flex;
+    justify-content:center;
+    margin:40px auto;
 }
 
-/* HEART BURST */
-.burst {
-    position: absolute;
-    font-size: 24px;
-    animation: pop 1s ease-out forwards;
+.envelope{
+    width:320px;
+    height:220px;
+    background:#f8b6c8;
+    position:relative;
+    cursor:pointer;
+    border-radius:14px;
 }
 
-@keyframes pop {
-    0% { transform: scale(0); opacity: 1; }
-    100% { transform: scale(3); opacity: 0; }
+.flap{
+    position:absolute;
+    inset:0;
+    background:#e89ab0;
+    clip-path:polygon(0 0,100% 0,50% 55%);
+    transform-origin:top;
+    transition:transform 0.9s ease;
+    z-index:3;
+}
+
+.letter{
+    position:absolute;
+    inset:20px;
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    z-index:2;
+    font-family:'Great Vibes',cursive;
+    font-size:24px;
+}
+
+/* OPEN ANIMATION */
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
+
+/* BUTTONS */
+button{
+    font-family:'Poppins',sans-serif;
+    font-size:15px;
+    border:none;
+    padding:8px 16px;
+    margin:5px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.yes{background:#ff69b4;color:white;}
+.no{background:#ddd;position:relative;}
+
+/* CARD (SORRY LETTER) */
+.card{
+    display:none;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.25);
+    max-width:600px;
+    margin:20px auto;
+    font-family:'Great Vibes',cursive;
+}
+
+.script{
+    font-family:'Great Vibes',cursive;
+    font-size:30px;
+    color:#b1124c;
+    line-height:1.8;
+}
+
+/* FLOWERS */
+.flower{
+    position:fixed;
+    bottom:-60px;
+    font-size:40px;
+    animation:floatUp 4s ease-out forwards;
+    pointer-events:none;
+}
+@keyframes floatUp{
+    0%{opacity:0; transform:translateY(0) scale(0.5);}
+    30%{opacity:1;}
+    100%{opacity:0; transform:translateY(-120vh) scale(1.2);}
+}
+
+/* BOWS */
+.bow{
+    position:fixed;
+    top:-40px;
+    font-size:32px;
+    animation:bowFall 5s linear forwards;
+    pointer-events:none;
+}
+@keyframes bowFall{
+    to{transform:translateY(110vh) rotate(360deg); opacity:0;}
+}
+
+#flowerSelector{
+    display:none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card" id="card">
-    <div class="emoji">😭</div>
-    <h1>Will you forgive me?</h1>
-    <div id="message"></div>
+<h1>I'm Sorry 💔</h1>
 
-    <div class="btn-container">
-        <button id="yesBtn" onclick="forgive()">Yes 💕</button>
-        <button id="noBtn" onmouseover="moveNo()">No 😢</button>
+<audio id="music" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick="toggleMusic()">🎶 Play / Pause Music</button>
+
+<!-- ENVELOPE -->
+<div class="envelope-wrapper">
+    <div class="envelope" id="envelope">
+        <div class="flap"></div>
+        <div class="letter">
+            <p>I’m really sorry... 🥺</p>
+            <button class="yes" onclick="answerYes()">Forgive Me 💖</button>
+            <button class="no" onmouseover="moveNo(this)">No 😢</button>
+        </div>
     </div>
 </div>
 
-<audio id="bgm" loop>
-    <source src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3">
-</audio>
+<!-- FLOWER SELECTOR -->
+<div id="flowerSelector">
+  <button onclick="startFlowers('💖')" class="yes">Hearts 💖</button>
+  <button onclick="startFlowers('🌸')" class="yes">Flowers 🌸</button>
+  <button onclick="startFlowers('🌹')" class="yes">Roses 🌹</button>
+</div>
+
+<!-- SORRY CARD -->
+<div class="card" id="card">
+<p class="script">
+I’m truly sorry for what I did.<br><br>
+I never meant to hurt you or make you feel unimportant.<br><br>
+You mean a lot to me, and I hope we can fix this together.<br><br>
+Please forgive me 💔
+</p>
+</div>
 
 <script>
 
-/* TYPE TEXT */
-const intro = "I’m really sorry... I didn’t mean to hurt you 🥺";
-let i = 0;
-
-function typeIntro() {
-    if (i < intro.length) {
-        document.getElementById("message").innerHTML += intro[i++];
-        setTimeout(typeIntro, 40);
-    }
-}
-typeIntro();
-
-/* YES CLICK */
-function forgive() {
-    const audio = document.getElementById("bgm");
-
-    audio.play().catch(()=>{});
-    audio.volume = 0;
-
-    let vol = 0;
-    const fade = setInterval(() => {
-        if (vol < 1) {
-            vol += 0.05;
-            audio.volume = vol;
-        } else {
-            clearInterval(fade);
-        }
-    }, 100);
-
-    const card = document.getElementById("card");
-
-    card.innerHTML = `
-        <div style="font-size:55px;">💌</div>
-        <h2 style="color:#e75480;">For You...</h2>
-        <p id="letter"></p>
-    `;
-
-    const text = "I know I hurt you... I'm really sorry 🥺 You matter so much to me. I just want us to be okay again 💖";
-
-    let j = 0;
-    function typeLetter() {
-        if (j < text.length) {
-            document.getElementById("letter").innerHTML += text[j++];
-            setTimeout(typeLetter, 35);
-        }
-    }
-    typeLetter();
-
-    document.getElementById("noBtn").style.display = "none";
-
-    heartBurst();
-}
-
-/* NO BUTTON MOVE (SMALL ESCAPE EFFECT) */
-function moveNo() {
-    const btn = document.getElementById("noBtn");
-
-    const x = (Math.random() * 20) - 10;
-    const y = (Math.random() * 20) - 10;
-
-    btn.style.transform = translate(${x}px, ${y}px) scale(0.95);
-}
-
-/* HEART RAIN */
-function heart() {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "💖";
-
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.fontSize = (Math.random() * 20 + 10) + "px";
-
+/* HEARTS */
+for(let i=0;i<30;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="♥️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=3+Math.random()*5+"s";
     document.body.appendChild(h);
-    setTimeout(() => h.remove(), 5000);
 }
-setInterval(heart, 250);
 
-/* HEART BURST */
-function heartBurst() {
-    for (let i = 0; i < 25; i++) {
-        const h = document.createElement("div");
-        h.className = "burst";
-        h.innerHTML = "💖";
+/* MUSIC */
+function toggleMusic(){
+    let m=document.getElementById("music");
+    if(m.paused){
+        m.volume=0.5;
+        m.play();
+    }else{
+        m.pause();
+    }
+}
 
-        h.style.left = (50 + Math.random() * 10 - 5) + "vw";
-        h.style.top = (50 + Math.random() * 10 - 5) + "vh";
+/* ENVELOPE OPEN */
+function answerYes(){
+    const envelope=document.getElementById("envelope");
+    envelope.classList.add("open");
 
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 1000);
+    const music=document.getElementById("music");
+    music.volume=0.5;
+    music.play();
+
+    showBows();
+    startFlowers('💖');
+
+    document.getElementById("flowerSelector").style.display="block";
+
+    setTimeout(()=>{
+        document.querySelector(".envelope-wrapper").style.display="none";
+        document.getElementById("card").style.display="block";
+    },900);
+}
+
+/* NO BUTTON */
+function moveNo(btn){
+    btn.style.position="absolute";
+    btn.style.left=Math.random()*200+"px";
+    btn.style.top=Math.random()*100+"px";
+}
+
+/* FLOWERS */
+let flowerInterval;
+function startFlowers(type){
+    if(flowerInterval) clearInterval(flowerInterval);
+
+    flowerInterval = setInterval(()=>{
+        let f=document.createElement("div");
+        f.className="flower";
+        f.innerHTML=type;
+        f.style.left=Math.random()*100+"vw";
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),4000);
+    },500);
+}
+
+/* BOWS */
+function showBows(){
+    for(let i=0;i<12;i++){
+        let b=document.createElement("div");
+        b.className="bow";
+        b.innerHTML="🎀";
+        b.style.left=Math.random()*100+"vw";
+        document.body.appendChild(b);
+        setTimeout(()=>b.remove(),5000);
     }
 }
 
