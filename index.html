@@ -12,8 +12,8 @@ body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    font-family: 'Cedarville Cursive', cursive; /* Main realistic handwritten font */
-    background: #f8f1e3; /* Warm light paper tone */
+    font-family: 'Cedarville Cursive', cursive;
+    background: #f8f1e3;
     position: relative;
     color: #2c2c2c;
 }
@@ -62,22 +62,12 @@ h1 {
     padding: 48px 38px 60px;
     border-radius: 18px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.45);
-    font-size: 22px;
-    line-height: 1.68;
+    font-size: 21.5px;
+    line-height: 1.72;
     color: #1f2a44;
     text-align: left;
     z-index: 20;
     border: 1px solid #e0d8c0;
-}
-
-/* Anime girl sticker */
-.anime-sticker {
-    position: absolute;
-    right: -28px;
-    top: 56%;
-    width: 115px;
-    z-index: 25;
-    filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
 }
 
 /* Floating hearts */
@@ -138,17 +128,10 @@ h1 {
 
 <button class="music-btn" onclick="toggleMusic()">🎵 Play / Pause Music</button>
 
-<!-- Handwritten Note -->
+<!-- Your exact handwritten note -->
 <div class="note" id="note">
-    <p>you, maybe i'm shy to tell u my problem, and i'm sorry sometimes u feel unloved, sorry i made u feel that way. Time may pass, and storms may rage, but my heart will always find its way back to you. You are, and always will be, my chosen one. Whatever happens between us, know that I will always choose you.</p>
-    
-    <div style="margin-top:32px; font-size:21px; text-align:right; color:#5c5c5c; font-family:'Reenie Beanie', cursive;">
-        might fight, we might disagree, but at the end of the day, you win. you're my everything ❤️
-    </div>
+    <p>Dear liyana, i want to sincerely apologize for my actions that caused you hurt. I deeply regret my words and behavior and made you feel unloved. I dont want to make you cry ever again, it hurts me more than anything. I hope you will still choose me and stay even after seeing how unpredictable i can be, i still struggle to understand myself most of the time and i swear sayang ,i still trying to be the man that you want. You are and always will be my chosen one, i proud of having you in my life and proud to tell everyone around me.whatever happens between us, know that i will always choose you.we might fight, disagree, but at the end of the day, i choose you. As my token of apology, i owe you some sweets for our next date tau ? <3</p>
 </div>
-
-<!-- Cute Anime Girl Sticker -->
-<img src="https://picsum.photos/id/1005/220/280" alt="anime girl" class="anime-sticker" id="sticker">
 
 <!-- Floating hearts container -->
 <div id="heartsContainer"></div>
@@ -195,7 +178,6 @@ function toggleMusic() {
 // Click the note to open the card
 document.getElementById("note").addEventListener("click", () => {
     document.getElementById("note").style.opacity = "0.35";
-    document.getElementById("sticker").style.opacity = "0.65";
     
     const music = document.getElementById("music");
     music.play().catch(() => {});
